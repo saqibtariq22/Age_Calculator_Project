@@ -1,0 +1,173 @@
+body {
+    height: 100vh;
+    margin: 0;
+    font-family: sans-serif;
+    /* Animated Gradient Background */
+    background: linear-gradient(135deg, #89f7fe, #66a6ff, #89f7fe);
+    background-size: 400% 400%;
+    animation: gradientAnimation 15s ease infinite;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* Important to hide overflowing shapes */
+    position: relative; /* For positioning the shapes */
+}
+
+/* Keyframe for the gradient animation */
+@keyframes gradientAnimation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Container for the floating shapes */
+.background-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+.shape {
+    position: absolute;
+    display: block;
+    list-style: none;
+    background: rgba(255, 255, 255, 0.2); /* Semi-transparent white shapes */
+    animation: float 25s linear infinite;
+    bottom: -150px; /* Start below the screen */
+}
+
+/* Different sizes and starting positions for variety */
+.shape:nth-child(1) { left: 25%; width: 80px; height: 80px; animation-delay: 0s; }
+.shape:nth-child(2) { left: 10%; width: 20px; height: 20px; animation-delay: 2s; animation-duration: 12s; }
+.shape:nth-child(3) { left: 70%; width: 20px; height: 20px; animation-delay: 4s; }
+.shape:nth-child(4) { left: 40%; width: 60px; height: 60px; animation-delay: 0s; animation-duration: 18s; }
+.shape:nth-child(5) { left: 65%; width: 20px; height: 20px; animation-delay: 0s; }
+.shape:nth-child(6) { left: 75%; width: 110px; height: 110px; animation-delay: 3s; }
+.shape:nth-child(7) { left: 35%; width: 150px; height: 150px; animation-delay: 7s; }
+.shape:nth-child(8) { left: 50%; width: 25px; height: 25px; animation-delay: 15s; animation-duration: 45s; }
+.shape:nth-child(9) { left: 20%; width: 15px; height: 15px; animation-delay: 2s; animation-duration: 35s; }
+.shape:nth-child(10) { left: 85%; width: 150px; height: 150px; animation-delay: 0s; animation-duration: 11s; }
+
+/* Keyframe for the floating animation */
+@keyframes float {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+        border-radius: 0;
+    }
+    100% {
+        transform: translateY(-1000px) rotate(720deg);
+        opacity: 0;
+        border-radius: 50%;
+    }
+}
+
+
+.box {
+    /* MODIFIED: Changed background to transparent black and text to white */
+    background: rgba(0, 0, 0, 0.75);
+    color: #ffffff;
+    padding: 24px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    width: 300px;
+    box-sizing: border-box;
+    text-align: center;
+    animation: zoomIn 0.6s ease-out forwards;
+    transition: all 0.4s ease; /* Smooth transition for hover effect */
+    z-index: 1; /* Ensure the box is above the shapes */
+    position: relative;
+    backdrop-filter: blur(5px); /* Frosted glass effect */
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Light border for contrast */
+}
+
+.box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+}
+
+/* NEW: Styles for the hidden content wrapper */
+.calculator-content {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease-out, opacity 0.4s ease-out, margin-top 0.5s ease-out;
+}
+
+/* NEW: On hover, reveal the content */
+.box:hover .calculator-content {
+    max-height: 200px; /* Set a height large enough for the content */
+    opacity: 1;
+    margin-top: 20px; /* Add some space between title and content */
+}
+
+
+input[type="date"] {
+    padding: 10px;
+    width: 100%;
+    font-size: 16px;
+    background-color: #eaf6ff;
+    border: 1px solid #d4e9f7;
+    margin-bottom: 16px;
+    box-sizing: border-box;
+    border-radius: 6px;
+    transition: border-color 0.3s ease;
+    color: #334155; /* Darker text for readability */
+}
+
+input[type="date"]:focus {
+    outline: none;
+    border-color: #66a6ff;
+}
+
+.result {
+    font-size: 16px;
+    font-weight: 500;
+    color: #1e293b;
+    background: #eaf6ff;
+    border: 1px solid #d4e9f7;
+    border-radius: 6px;
+    padding: 12px;
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+/* This class adds the blinking cursor effect */
+.result.typing::after {
+    content: '';
+    position: absolute;
+    width: 2px;
+    height: 1.2em;
+    background-color: #333;
+    animation: blink 1s step-end infinite;
+}
+
+/* Keyframe Animations */
+
+/* NEW: zoomIn animation */
+@keyframes zoomIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Blinking cursor animation */
+@keyframes blink {
+    from, to {
+        background-color: transparent;
+    }
+    50% {
+        background-color: #333; /* Cursor color */
+    }
+}
